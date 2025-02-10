@@ -1,0 +1,6 @@
+name: aicalendar
+
+services:
+  app-web:
+    container_name: app-web
+    image: teeco123/app-web:test
