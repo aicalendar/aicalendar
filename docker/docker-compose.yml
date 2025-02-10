@@ -4,3 +4,5 @@ services:
   app-web:
     container_name: app-web
     image: teeco123/app-web:test
+    ports:
+      - 3000:3000
