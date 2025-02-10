@@ -1,3 +1,8 @@
+# Usage
+#   Start:              docker compose up
+#   Stop:               docker compose down
+#   Destory:            docker compose down -v
+
 name: aicalendar
 
 services:
