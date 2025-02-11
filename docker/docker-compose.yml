@@ -8,6 +8,6 @@ name: aicalendar
 services:
   app-web:
     container_name: app-web
-    image: teeco123/app-web:test
+    image: ghcr.io/aicalendar/app-web:dev-latest
     ports:
       - 80:80
