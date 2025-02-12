@@ -9,10 +9,10 @@ services:
   app-web:
     container_name: app-web
     build:
-      context: /Users/kacper/Work/aicalendar/app-web/
+      context: ${WEB_APP_REL_PATH}
       dockerfile: DockerfileDev
     volumes:
-      - /Users/kacper/Work/aicalendar/app-web/:/app  # Correct absolute path
+      - ${WEB_APP_REL_PATH}:/app  # Correct absolute path
       - /app/node_modules 
 
   api-user-service:
