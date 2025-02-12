@@ -1,0 +1,45 @@
+# Usage
+#   Start:              docker compose up
+#   Stop:               docker compose down
+#   Destory:            docker compose down -v
+
+name: aicalendar
+
+services:
+  app-web:
+    container_name: app-web
+    build:
+      context: /Users/kacper/Work/aicalendar/app-web/
+      dockerfile: DockerfileDev
+    volumes:
+      - /Users/kacper/Work/aicalendar/app-web/:/app  # Correct absolute path
+      - /app/node_modules 
+
+  api-user-service:
+    container_name: api-user-service
+    image: ghcr.io/aicalendar/api-user-service:dev-latest
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro  # Mount the custom Nginx config
+    ports:
+      - "80:80"
+
+  database:
+    container_name: database
+    image: postgres:17.2-bookworm
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - database_data:/var/lib/postgresql/data
+
+volumes:
+  database_data:  
