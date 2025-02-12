@@ -1,5 +1,5 @@
 # Usage
-#   Start:              docker compose up
+#   Start:              docker compose -f docker-compose.dev.yml --env-file .dev.env up -d
 #   Stop:               docker compose down
 #   Destory:            docker compose down -v
 
