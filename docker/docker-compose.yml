@@ -11,3 +11,18 @@ services:
     image: ghcr.io/aicalendar/app-web:dev-latest
     ports:
       - 80:80
+  database:
+    container_name: database
+    image: postgres:17.2-bookworm
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - database_data:/var/lib/postgresql/data
+volumes:
+  database_data:  
