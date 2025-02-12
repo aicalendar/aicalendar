@@ -17,7 +17,11 @@ services:
 
   api-user-service:
     container_name: api-user-service
-    image: ghcr.io/aicalendar/api-user-service:dev-latest
+    build:
+      context: ${API_USER_SERVICE_REL_PATH}
+      dockerfile: DockerfileDev
+    volumes:
+      - ${API_USER_SERVICE_REL_PATH}:/app  
 
   nginx:
     image: nginx:latest
