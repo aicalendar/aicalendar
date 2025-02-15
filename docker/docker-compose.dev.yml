@@ -20,13 +20,14 @@ services:
     build:
       context: ${API_USER_SERVICE_REL_PATH}
       dockerfile: DockerfileDev
-    env_file: .dev.env
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
     volumes:
       - ${API_USER_SERVICE_REL_PATH}:/app  
 
@@ -42,15 +43,23 @@ services:
     container_name: database
     image: postgres:17.2-bookworm
     restart: always
-    env_file: .dev.env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 5432:5432
+      - ${DB_PORT}:${DB_PORT}
     volumes:
       - database_data:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis
+    image: redis:7.4.2-alpine
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
 
 volumes:
   database_data:  
