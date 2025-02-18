@@ -6,6 +6,7 @@ source .env
 # Run the api-user-service with environment variables
 docker run -d \
   --name api-user-service \
+  -p 80:80 \
   -e DB_HOST=${DB_HOST} \
   -e DB_PORT=${DB_PORT} \
   -e DB_NAME=${DB_NAME} \
