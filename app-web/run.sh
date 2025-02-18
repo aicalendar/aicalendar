@@ -7,4 +7,4 @@ source .env
 docker run -d \
   --name app-web \
   -p 80:80 \
-  ghcr.io/aicalendar/app-web:dev-latest
+  ghcr.io/aicalendar/app-web:latest
