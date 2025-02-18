@@ -9,4 +9,4 @@ docker run -d \
   -e REDIS_PASSWORD=${REDIS_PASSWORD} \
   -p ${REDIS_PORT}:${REDIS_PORT} \
   redis:7.4.2-alpine \
-  sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+  sh -c "redis-server --requirepass ${REDIS_PASSWORD}"
