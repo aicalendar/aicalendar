@@ -20,12 +20,21 @@ services:
     build:
       context: ${API_USER_SERVICE_REL_PATH}
       dockerfile: DockerfileDev
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     volumes:
       - ${API_USER_SERVICE_REL_PATH}:/app  
 
   nginx:
-    image: nginx:latest
     container_name: nginx
+    image: nginx:1.27.4-alpine
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro  # Mount the custom Nginx config
     ports:
@@ -33,17 +42,26 @@ services:
 
   database:
     container_name: database
-    image: postgres:17.2-bookworm
+    image: postgres:17.3-alpine
     restart: always
-    env_file: .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 5432:5432
+      - ${DB_PORT}:${DB_PORT}
     volumes:
       - database_data:/var/lib/postgresql/data
+
+  redis:
+    container_name: redis
+    image: redis:7.4.2-alpine
+    command: >
+      sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
 
 volumes:
   database_data:  
