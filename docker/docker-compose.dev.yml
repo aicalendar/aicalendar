@@ -30,7 +30,24 @@ services:
       REDIS_PORT: ${REDIS_PORT}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     volumes:
-      - ${API_USER_SERVICE_REL_PATH}:/app  
+      - ${API_USER_SERVICE_REL_PATH}:/app
+
+  api-event-service:
+    container_name: api-event-service
+    build:
+      context: ${API_EVENT_SERVICE_REL_PATH}
+      dockerfile: DockerfileDev
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - ${API_EVENT_SERVICE_REL_PATH}:/app  
 
   nginx:
     container_name: nginx
