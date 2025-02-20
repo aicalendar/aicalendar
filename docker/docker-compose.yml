@@ -66,6 +66,9 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     ports:
       - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - redis_data:/data
 
 volumes:
-  database_data:  
+  database_data:
+  redis_data
