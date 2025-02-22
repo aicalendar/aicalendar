@@ -11,9 +11,14 @@ services:
     build:
       context: ${WEB_APP_REL_PATH}
       dockerfile: DockerfileDev
+    ports:
+      - 5173:5173
     volumes:
-      - ${WEB_APP_REL_PATH}:/app  # Correct absolute path
-      - /app/node_modules 
+      - ${WEB_APP_REL_PATH}/src:/app/src
+      - ${WEB_APP_REL_PATH}/static:/app/static
+      - ${WEB_APP_REL_PATH}/vite.config.ts:/app/vite.config.ts
+      - ${WEB_APP_REL_PATH}/tsconfig.json:/app/tsconfig.json
+      - ${WEB_APP_REL_PATH}/svelte.config.js:/app/svelte.config.js
 
   api-user-service:
     container_name: api-user-service
